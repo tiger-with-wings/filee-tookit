@@ -1,0 +1,14 @@
+.nav-card {
+  display: inline-block;
+  height: 160px;
+  width: 300px;
+  border-radius: 10px;
+  background-color: #fff;
+  line-height: 160px;
+  text-align: center;
+  box-shadow: 1px 1px 2px 0 #ddd;
+
+  &:hover {
+    box-shadow: 2px 2px 5px 0 #999;
+  }
+}

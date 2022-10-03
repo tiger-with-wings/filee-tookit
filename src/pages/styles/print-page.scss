@@ -1,0 +1,34 @@
+// A4 打印纸样式设置
+.print-paper-a4 {
+  box-sizing: border-box;
+  background-color: #fff;
+  box-shadow: 0 0 10px 0 #666;
+  padding: 10mm;
+
+  &.vertical {
+    width: 210mm;
+    height: 297mm;
+  }
+
+  &.horizontal {
+    width: 297mm;
+    height: 210mm;
+  }
+}
+
+.print-page-content {
+  display: flex;
+  overflow: auto;
+  justify-content: center;
+
+  .print-common-vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .print-common-horizontal {
+    display: flex;
+    justify-content: center;
+  }
+}

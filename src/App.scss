@@ -1,0 +1,57 @@
+.page {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .page-header {
+    flex: 0 0 auto;
+    height: 64px;
+    box-sizing: border-box;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+
+    .title {
+      flex: 1 1 auto;
+      font-size: 20px;
+      font-weight: bold;
+      padding: 0;
+      margin: 0;
+    }
+
+    .control-wrap {
+      &>*:not(:first-child) {
+        margin-left: 20px;
+      }
+    }
+  }
+
+  .content {
+    box-sizing: border-box;
+    flex: 1 1 auto;
+    padding: 20px;
+    background-color: #f0f1f2;
+  }
+
+  .footer {
+    flex: 0 0 auto;
+    height: 128px;
+    background-color: #fff;
+  }
+}
+
+/* CDN 服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
+@font-face {
+  font-family: 'iconfont';
+  /* Project id 3586756 */
+  src: url('//at.alicdn.com/t/c/font_3586756_scl48jnuae.woff2?t=1664776758300') format('woff2'),
+    url('//at.alicdn.com/t/c/font_3586756_scl48jnuae.woff?t=1664776758300') format('woff'),
+    url('//at.alicdn.com/t/c/font_3586756_scl48jnuae.ttf?t=1664776758300') format('truetype');
+}
+
+.icon-font {
+  font-family: 'iconfont';
+  font-style: normal;
+}
