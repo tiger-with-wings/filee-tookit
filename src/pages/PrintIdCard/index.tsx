@@ -10,7 +10,7 @@ const PrintIdCard = (props: Props) => {
   const { type } = useParams();
   return (
     <div className="page">
-      <SimpleHeader title="身份证打印排版" showPrintBtn />
+      <SimpleHeader title="身份证或银行卡打印排版" showPrintBtn />
       <div className="content print-page-content">
         <div className="print-paper-a4 vertical print-common-vertical print-wrap">
           <ChooseImg

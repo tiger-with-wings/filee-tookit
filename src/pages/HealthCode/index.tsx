@@ -10,7 +10,7 @@ const HealthCode = (props: Props) => {
   const { type } = useParams();
   return (
     <div className="page">
-      <SimpleHeader title="身份证打印排版" showPrintBtn />
+      <SimpleHeader title="健康码打印排版" showPrintBtn />
       <div className="content print-page-content">
         <div
           className="print-paper-a4 horizontal print-common-horizontal print-wrap"
