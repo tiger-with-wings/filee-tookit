@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.scss';
 import {
-  createHashRouter,
+  createBrowserRouter,
   RouterProvider,
 } from 'react-router-dom';
 import Index from './pages/Index';
@@ -10,7 +10,7 @@ import PrintIdCard from './pages/PrintIdCard';
 import PrintResidenceBooklet from './pages/PrintResidenceBooklet';
 import HealthCode from './pages/HealthCode';
 
-const router = createHashRouter([
+const router = createBrowserRouter([
   {
     path: '/',
     element: <Index />,
