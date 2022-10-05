@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom';
+import Button from '../Button';
 
 type Props = {
   to: string;
@@ -11,11 +12,11 @@ type Props = {
 const GoToBtn = ({ to, children, style, className }: Props) => {
   const navigate = useNavigate();
   return (
-    <button style={style} className={className} onClick={
+    <Button style={style} className={className} onClick={
       () => {
         navigate(to);
       }
-    }>{children}</button>
+    }>{children}</Button>
   )
 }
 

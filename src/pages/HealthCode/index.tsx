@@ -1,5 +1,4 @@
 import React from 'react';
-import './index.scss';
 import { useParams } from 'react-router-dom';
 import ChooseImg from '../../components/ChooseImg';
 import SimpleHeader from '../../components/SimpleHeader';
@@ -15,6 +14,7 @@ const HealthCode = (props: Props) => {
         <div
           className="print-paper-a4 horizontal print-common-horizontal print-wrap"
           data-orientation="l"
+          data-filename="健康码.pdf"
         >
           <ChooseImg
             style={{

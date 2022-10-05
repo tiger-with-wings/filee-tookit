@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/filee-tookit/static/css/main.ee3721f8.css",
-    "main.js": "/filee-tookit/static/js/main.6fa4cec7.js",
+    "main.css": "/filee-tookit/static/css/main.d61ce62a.css",
+    "main.js": "/filee-tookit/static/js/main.d7b38f5a.js",
     "static/js/208.1b8bb430.chunk.js": "/filee-tookit/static/js/208.1b8bb430.chunk.js",
     "static/js/477.3ae00b72.chunk.js": "/filee-tookit/static/js/477.3ae00b72.chunk.js",
     "static/js/272.4b7a98e0.chunk.js": "/filee-tookit/static/js/272.4b7a98e0.chunk.js",
     "index.html": "/filee-tookit/index.html",
-    "main.ee3721f8.css.map": "/filee-tookit/static/css/main.ee3721f8.css.map",
-    "main.6fa4cec7.js.map": "/filee-tookit/static/js/main.6fa4cec7.js.map",
+    "main.d61ce62a.css.map": "/filee-tookit/static/css/main.d61ce62a.css.map",
+    "main.d7b38f5a.js.map": "/filee-tookit/static/js/main.d7b38f5a.js.map",
     "208.1b8bb430.chunk.js.map": "/filee-tookit/static/js/208.1b8bb430.chunk.js.map",
     "477.3ae00b72.chunk.js.map": "/filee-tookit/static/js/477.3ae00b72.chunk.js.map",
     "272.4b7a98e0.chunk.js.map": "/filee-tookit/static/js/272.4b7a98e0.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ee3721f8.css",
-    "static/js/main.6fa4cec7.js"
+    "static/css/main.d61ce62a.css",
+    "static/js/main.d7b38f5a.js"
   ]
 }

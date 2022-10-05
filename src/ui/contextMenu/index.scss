@@ -1,0 +1,21 @@
+#contextMenu {
+
+  .context-menu {
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+
+    // &::before {
+    //   position: fixed;
+    //   z-index: 998;
+    //   content: '';
+    //   left: 0;
+    //   top: 0;
+    //   width: 100vw;
+    //   height: 100vh;
+    // }
+  }
+}

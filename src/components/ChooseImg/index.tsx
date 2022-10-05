@@ -1,4 +1,6 @@
 import React, { useCallback, useState } from 'react';
+import contextMenu from '../../ui/contextMenu';
+import Button from '../Button';
 import './index.scss';
 
 type Props = {
@@ -14,7 +16,7 @@ const enableImgList = ['image/jpg', 'image/jpeg', 'image/png'];
 const ChooseImg = ({ placeholder, accept, style, autoWidth, autoHeight }: Props) => {
   const [src, setSrc] = useState('');
 
-  const setFileToSrc = useCallback((file: File) => {
+  const setFileToSrc = useCallback((file: Blob) => {
     const fileReader = new FileReader();
     fileReader.onload = () => {
       if (typeof fileReader.result !== 'string') {
@@ -61,7 +63,34 @@ const ChooseImg = ({ placeholder, accept, style, autoWidth, autoHeight }: Props)
           }
         }
         onContextMenu={
-          (e) => {
+          (e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => {
+            contextMenu.show(
+              <Button
+                onClick={
+                  () => {
+                    window.navigator.clipboard.read().then(async (clipboardDataItems) => {
+                      for (let i = 0, limit = clipboardDataItems.length; i < limit; i++) {
+                        const item = clipboardDataItems[i];
+                        for (let j = 0, jLimit = item.types.length; j < jLimit; j++) {
+                          const fileType = item.types[i];
+                          if (enableImgList.includes(fileType)) {
+                            try {
+                              const file = await item.getType(fileType);
+                              setFileToSrc(file);
+                              break;
+                            } catch (err) {
+                              console.error(err);
+                            }
+                          }
+                        }
+                      }
+                    });
+                  }
+                }
+              >粘贴 Ctrl + V</Button>,
+              e.clientX,
+              e.clientY,
+            )
             e.preventDefault();
           }
         }
@@ -93,7 +122,7 @@ const ChooseImg = ({ placeholder, accept, style, autoWidth, autoHeight }: Props)
           <span className="placeholder-text">{placeholder}</span>
         </div>
       </label >
-    </div>
+    </div >
   )
 }
 
