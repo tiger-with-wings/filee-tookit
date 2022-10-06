@@ -20,13 +20,14 @@ async function printAll(
   pdfFiles: PDFFile[],
   orderId: string,
   pickupCode: string,
+  price: number,
   printOrderInfo: boolean = false,
   type: 'print' | 'export'
 ) {
   const countFile = pdfFiles.length;
   let countPages = 0;
   pdfFiles.forEach(item => countPages += item.getPageCount());
-  const printInfo = `取货号码：${pickupCode}\n文件数量：${countFile}个\n合计页数：${countPages}页\n打印时间：${moment().format('YYYY-MM-DD HH:mm:ss')}\n订单编号：${orderId}`;
+  const printInfo = `取货号码：${pickupCode}\n文件数量：${countFile}个\n合计页数：${countPages}页\n计算单价：${price.toFixed(2)}元/页\n预估总价：${(price * countPages).toFixed(2)}元\n打印时间：${moment().format('YYYY-MM-DD HH:mm:ss')}\n订单编号：${orderId}`;
   console.log(printInfo);
   const mergedPdf = await PDFDocument.create();
 
@@ -120,7 +121,7 @@ const CreatePrintOrder = (props: Props) => {
           hidden={countFiles === 0 || countPages === 0}
           onClick={
             () => {
-              printAll(pdfFiles, orderId, pickupCode, printOrderInfo, 'export');
+              printAll(pdfFiles, orderId, pickupCode, price, printOrderInfo, 'export');
             }
           }
         >导出为PDF</Button>
@@ -130,7 +131,7 @@ const CreatePrintOrder = (props: Props) => {
           className="print-btn"
           onClick={
             () => {
-              printAll(pdfFiles, orderId, pickupCode, printOrderInfo, 'print');
+              printAll(pdfFiles, orderId, pickupCode, price, printOrderInfo, 'print');
             }
           }
         >打印全部</Button>
