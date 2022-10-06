@@ -36,6 +36,10 @@
     flex: 1 1 auto;
     padding: 20px;
     background-color: #f0f1f2;
+
+    .fluid-layout-item {
+      margin: 0 10px 10px 0;
+    }
   }
 
   .footer {

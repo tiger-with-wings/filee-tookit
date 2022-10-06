@@ -6,9 +6,10 @@ import {
 } from 'react-router-dom';
 import Index from './pages/Index';
 import Composing from './pages/Composing';
-import PrintIdCard from './pages/PrintIdCard';
-import PrintResidenceBooklet from './pages/PrintResidenceBooklet';
-import HealthCode from './pages/HealthCode';
+import PrintIdCard from './pages/Composing/PrintIdCard';
+import PrintResidenceBooklet from './pages/Composing/PrintResidenceBooklet';
+import PrintHealthCode from './pages/Composing/PrintHealthCode';
+import CreatePrintOrder from './pages/CreatePrintOrder';
 
 const router = createHashRouter([
   {
@@ -18,18 +19,24 @@ const router = createHashRouter([
   {
     path: '/composing',
     element: <Composing />,
+    children: [
+      {
+        path: 'id-card/:type',
+        element: <PrintIdCard />,
+      },
+      {
+        path: 'residence-booklet/:type',
+        element: <PrintResidenceBooklet />,
+      },
+      {
+        path: 'health-code/:type',
+        element: <PrintHealthCode />,
+      },
+    ]
   },
   {
-    path: '/composing/id-card/:type',
-    element: <PrintIdCard />,
-  },
-  {
-    path: '/composing/residence-booklet/:type',
-    element: <PrintResidenceBooklet />,
-  },
-  {
-    path: '/composing/health-code/:type',
-    element: <HealthCode />,
+    path: '/create-print-order',
+    element: <CreatePrintOrder />,
   },
 ]);
 

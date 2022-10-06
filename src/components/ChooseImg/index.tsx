@@ -1,20 +1,21 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import contextMenu from '../../ui/contextMenu';
 import Button from '../Button';
 import './index.scss';
 
 type Props = {
   placeholder?: string;
-  accept?: string;
   style?: React.CSSProperties;
   autoWidth?: boolean;
   autoHeight?: boolean;
 }
 
-const enableImgList = ['image/jpg', 'image/jpeg', 'image/png'];
+const enableFileList = ['image/jpg', 'image/jpeg', 'image/png'];
 
-const ChooseImg = ({ placeholder, accept, style, autoWidth, autoHeight }: Props) => {
+const ChooseImg = ({ placeholder, style, autoWidth, autoHeight }: Props) => {
   const [src, setSrc] = useState('');
+
+  const inpRef = useRef<HTMLInputElement>(null);
 
   const setFileToSrc = useCallback((file: Blob) => {
     const fileReader = new FileReader();
@@ -40,6 +41,10 @@ const ChooseImg = ({ placeholder, accept, style, autoWidth, autoHeight }: Props)
         onClick={
           () => {
             setSrc('');
+            if (!inpRef.current) {
+              return;
+            }
+            inpRef.current.value = '';
           }
         }
       >&#xe67e;</i>
@@ -51,32 +56,38 @@ const ChooseImg = ({ placeholder, accept, style, autoWidth, autoHeight }: Props)
               const items = e.clipboardData.items;
               for (let i = 0, limit = items.length; i < limit; i++) {
                 const item = items[i];
-                if (item.kind === 'file' && enableImgList.includes(item.type)) {
+                if (item.kind === 'file' && enableFileList.includes(item.type)) {
                   const file = item.getAsFile();
                   if (!file) {
-                    return;
+                    continue;
                   }
                   setFileToSrc(file);
+                  break;
                 }
               }
             }
           }
         }
         onContextMenu={
-          (e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => {
+          (e) => {
             contextMenu.show(
               <Button
                 onClick={
                   () => {
                     window.navigator.clipboard.read().then(async (clipboardDataItems) => {
+                      let flag = false;
                       for (let i = 0, limit = clipboardDataItems.length; i < limit; i++) {
+                        if (flag) {
+                          break;
+                        }
                         const item = clipboardDataItems[i];
                         for (let j = 0, jLimit = item.types.length; j < jLimit; j++) {
-                          const fileType = item.types[i];
-                          if (enableImgList.includes(fileType)) {
+                          const fileType = item.types[j];
+                          if (enableFileList.includes(fileType)) {
                             try {
                               const file = await item.getType(fileType);
                               setFileToSrc(file);
+                              flag = true;
                               break;
                             } catch (err) {
                               console.error(err);
@@ -108,7 +119,7 @@ const ChooseImg = ({ placeholder, accept, style, autoWidth, autoHeight }: Props)
             display: src !== '' ? 'none' : undefined,
           }}
         >
-          <input hidden type="file" placeholder={placeholder} accept={accept} onChange={
+          <input ref={inpRef} hidden type="file" accept=".jpg,.jpeg,.png" onChange={
             (e) => {
               const files = e.target.files;
               if (!files || files.length <= 0) {

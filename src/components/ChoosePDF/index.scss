@@ -1,0 +1,54 @@
+.choose-pdf-file-label {
+  .file-list {
+    padding: 5px 0;
+    background-color: #fff;
+    margin-top: 10px;
+
+    .file {
+      padding: 5px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      &:not(:last-of-type) {
+        margin-bottom: 10px;
+      }
+
+      .file-name {
+        cursor: pointer;
+        flex: 1 1 auto;
+        width: 0;
+        color: #4b5cc4;
+
+        &:hover {
+          color: #202d88;
+        }
+      }
+
+      .file-size {
+        margin-left: 10px;
+      }
+
+      .file-page {
+        margin-left: 10px;
+      }
+
+      .delete-btn {
+        flex: 0 0 auto;
+        color: red;
+        cursor: pointer;
+        font-size: 22px;
+        margin-left: 10px;
+      }
+    }
+  }
+
+  .placeholder {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    border: 1px dashed #999;
+    padding: 10px;
+    background-color: #fff;
+  }
+}

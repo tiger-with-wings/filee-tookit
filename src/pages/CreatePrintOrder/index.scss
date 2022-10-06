@@ -1,0 +1,30 @@
+.order-wrap {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .pickup-code {
+    margin-left: 20px;
+  }
+
+  .price-inp-wrap {
+    margin-left: 20px;
+
+    .price-inp {
+      width: 4em;
+    }
+  }
+
+  .statistical-info {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-left: 20px;
+  }
+
+  .control-wrap {
+    margin-left: 20px;
+  }
+}

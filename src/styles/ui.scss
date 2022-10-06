@@ -6,6 +6,10 @@ $color-success-bg: #4b5cc4;
 $color-success-border: #374496;
 $color-success-text: #fff;
 
+$color-disabled-bg: #eee;
+$color-disabled-border: #ddd;
+$color-disabled-text: #999;
+
 .ui-button {
   outline: none;
   height: 32px;
@@ -28,5 +32,42 @@ $color-success-text: #fff;
     background-color: $color-success-bg;
     color: $color-success-text;
     border-color: $color-success-border;
+  }
+
+  &:disabled {
+    background-color: $color-disabled-bg;
+    color: $color-disabled-text;
+    border-color: $color-disabled-border;
+  }
+}
+
+.ui-input {
+  outline: none;
+  height: 32px;
+  border-radius: 2px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  border-width: 1px;
+  border-style: solid;
+  font-size: 16px;
+  line-height: 30px;
+  cursor: pointer;
+
+  &.ui-style-type-default {
+    background-color: $color-default-bg;
+    color: $color-default-text;
+    border-color: $color-default-border;
+  }
+
+  &.ui-style-type-success {
+    background-color: $color-success-bg;
+    color: $color-success-text;
+    border-color: $color-success-border;
+  }
+
+  &:disabled {
+    background-color: $color-disabled-bg;
+    color: $color-disabled-text;
+    border-color: $color-disabled-border;
   }
 }
