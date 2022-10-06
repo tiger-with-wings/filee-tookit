@@ -10,10 +10,18 @@
 
   .price-inp-wrap {
     margin-left: 20px;
+    display: flex;
+    align-items: center;
 
     .price-inp {
       width: 4em;
     }
+  }
+
+  .enabled-order-info-switch-wrap {
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
   }
 
   .statistical-info {

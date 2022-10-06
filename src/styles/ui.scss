@@ -71,3 +71,41 @@ $color-disabled-text: #999;
     border-color: $color-disabled-border;
   }
 }
+
+.ui-switch {
+  display: inline-block;
+  height: 24px;
+  width: 44px;
+  background-color: #fff;
+  border-radius: 12px;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    position: absolute;
+    top: 2px;
+    border-radius: 50%;
+    transition: left 200ms, background-color 200ms;
+  }
+
+  &.checked {
+    background-color: $color-success-bg;
+
+    &::before {
+      left: 22px;
+    }
+  }
+
+  &.unchecked {
+    background-color: #999;
+
+    &::before {
+      left: 2px;
+    }
+  }
+}

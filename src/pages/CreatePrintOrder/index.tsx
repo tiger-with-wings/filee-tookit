@@ -10,34 +10,48 @@ import { createOrderId, createPickupCode } from '../../utils/orderUtils';
 import Input from '../../components/Input';
 import fontkit from "@pdf-lib/fontkit";
 import simsunUrl from '../../assets/font/HanYiQiHei-40Jian-Regular-2.ttf';
+import Switch from '../../components/Switch';
+import assistantUrl from '../../assets/images/assistant.jpg';
 
 type Props = {}
 
-async function printAll(pdfFiles: PDFFile[], orderId: string, pickupCode: string, type: 'print' | 'export') {
+async function printAll(pdfFiles: PDFFile[], orderId: string, pickupCode: string, printOrderInfo: boolean = false, type: 'print' | 'export') {
   const countFile = pdfFiles.length;
   let countPages = 0;
   pdfFiles.forEach(item => countPages += item.getPageCount());
-  const printInfo = `飞鲤打印\n\n订单号：${orderId}\n取货码：${pickupCode}\n文件数量：${countFile}个\n合计页数：${countPages}页`;
+  const printInfo = `飞鲤便捷打印\n\n取货号码：${pickupCode}\n文件数量：${countFile}个\n合计页数：${countPages}页\n订单编号：${orderId}`;
   console.log(printInfo);
   const mergedPdf = await PDFDocument.create();
-  const firstPage = mergedPdf.addPage();
-  const { height } = firstPage.getSize();
 
-  const simsunFontBuffer = await fetch(simsunUrl).then(res => {
-    console.log(res.blob())
-    return res.arrayBuffer();
-  });
+  if (printOrderInfo) {
+    try {
+      const firstPage = mergedPdf.addPage();
+      const { height } = firstPage.getSize();
 
-  console.log(simsunFontBuffer);
-  mergedPdf.registerFontkit(fontkit);
-  const simsunFont = await mergedPdf.embedFont(simsunFontBuffer);
+      const simsunFontBytes = await fetch(simsunUrl).then(res => res.arrayBuffer());
+      mergedPdf.registerFontkit(fontkit);
+      const simsunFont = await mergedPdf.embedFont(simsunFontBytes);
 
-  firstPage.drawText(printInfo, {
-    x: 20,
-    y: height - 20,
-    size: 22,
-    font: simsunFont,
-  });
+      firstPage.drawText(printInfo, {
+        x: 20,
+        y: height - 50,
+        size: 22,
+        font: simsunFont,
+      });
+
+      const jpgImageBytes = await fetch(assistantUrl).then(res => res.arrayBuffer());
+      const jpgImage = await mergedPdf.embedJpg(jpgImageBytes);
+
+      firstPage.drawImage(jpgImage, {
+        x: 22,
+        y: height - 360,
+        width: 160,
+        height: 160,
+      });
+    } catch (err) {
+      console.error('添加自定义页失败');
+    }
+  }
 
   for (let i = 0, iLimit = pdfFiles.length; i < iLimit; i++) {
     const pdfFile = pdfFiles[i];
@@ -65,6 +79,7 @@ const CreatePrintOrder = (props: Props) => {
   const [orderId, setOrderId] = useState('');
   const [pickupCode, setPickupCode] = useState('');
   const [price, setPrice] = useState(1.00);
+  const [printOrderInfo, setPrintOrderInfo] = useState(false);
 
   useEffect(() => {
     setOrderId(createOrderId());
@@ -83,7 +98,7 @@ const CreatePrintOrder = (props: Props) => {
           hidden={countFiles === 0 || countPages === 0}
           onClick={
             () => {
-              printAll(pdfFiles, orderId, pickupCode, 'export');
+              printAll(pdfFiles, orderId, pickupCode, printOrderInfo, 'export');
             }
           }
         >导出为PDF</Button>
@@ -93,7 +108,7 @@ const CreatePrintOrder = (props: Props) => {
           className="print-btn"
           onClick={
             () => {
-              printAll(pdfFiles, orderId, pickupCode, 'print');
+              printAll(pdfFiles, orderId, pickupCode, printOrderInfo, 'print');
             }
           }
         >打印全部</Button>
@@ -101,8 +116,8 @@ const CreatePrintOrder = (props: Props) => {
 
       <div className="content">
         <div className="order-wrap">
-          <span className="order-id">订单号：{orderId}</span>
-          <span className="pickup-code">取货码：{pickupCode}</span>
+          <span className="order-id">订单编号：{orderId}</span>
+          <span className="pickup-code">取货号码：{pickupCode}</span>
           <label className="price-inp-wrap">
             单价：
             <Input className="price-inp" type="number" value={price} placeholder="请输入每页单价" onChange={(e) => {
@@ -114,8 +129,16 @@ const CreatePrintOrder = (props: Props) => {
                 newPrice = 0;
               }
               setPrice(newPrice);
-            }} /> 元/页
+            }} />元/页
           </label>
+          <span className="enabled-order-info-switch-wrap">
+            打印订单信息：
+            <Switch status={printOrderInfo} onChange={
+              (status) => {
+                setPrintOrderInfo(status);
+              }
+            } />
+          </span>
           <div className="statistical-info">
             共 {countFiles} 个文件，共 {countPages} 页，预估总价 {(price * countPages).toFixed(2)} 元
           </div>
