@@ -8,7 +8,7 @@ import { PDFDocument } from 'pdf-lib';
 import { downloadFromUrl } from '../../utils/fileUtils';
 import { createOrderId, createPickupCode } from '../../utils/orderUtils';
 import Input from '../../components/Input';
-
+import fontkit from "@pdf-lib/fontkit";
 type Props = {}
 
 async function printAll(pdfFiles: PDFFile[], orderId: string, pickupCode: string, type: 'print' | 'export') {
@@ -18,6 +18,24 @@ async function printAll(pdfFiles: PDFFile[], orderId: string, pickupCode: string
   const printInfo = `飞鲤打印\n\n订单号：${orderId}\n取货码：${pickupCode}\n文件数量：${countFile}个\n合计页数：${countPages}页`;
   console.log(printInfo);
   const mergedPdf = await PDFDocument.create();
+  const firstPage = mergedPdf.addPage();
+  const { height } = firstPage.getSize();
+
+  const simsunFontBuffer = await fetch('/fonts/simsun.ttf').then(res => {
+    console.log(res);
+    return res.arrayBuffer();
+  });
+  console.log(simsunFontBuffer);
+  mergedPdf.registerFontkit(fontkit);
+  const simsunFont = await mergedPdf.embedFont(simsunFontBuffer);
+
+  firstPage.drawText(printInfo, {
+    x: 20,
+    y: height - 20,
+    size: 22,
+    font: simsunFont,
+  });
+
   for (let i = 0, iLimit = pdfFiles.length; i < iLimit; i++) {
     const pdfFile = pdfFiles[i];
     const pages = await mergedPdf.copyPages(pdfFile, pdfFile.getPageIndices());
@@ -25,6 +43,7 @@ async function printAll(pdfFiles: PDFFile[], orderId: string, pickupCode: string
       mergedPdf.addPage(page);
     });
   }
+
   const mergedPdfFile = await mergedPdf.save();
   const blob = new Blob([mergedPdfFile], { type: 'application/pdf' });
   const url = window.URL.createObjectURL(blob);

@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@pdf-lib/fontkit': ^1.1.1
   '@testing-library/jest-dom': ^5.16.5
   '@testing-library/react': ^13.4.0
   '@testing-library/user-event': ^13.5.0
@@ -21,6 +22,7 @@ specifiers:
   web-vitals: ^2.1.4
 
 dependencies:
+  '@pdf-lib/fontkit': registry.npmmirror.com/@pdf-lib/fontkit/1.1.1
   '@testing-library/jest-dom': registry.npmmirror.com/@testing-library/jest-dom/5.16.5
   '@testing-library/react': registry.npmmirror.com/@testing-library/react/13.4.0_biqbaboplfbrettd7655fr4n2y
   '@testing-library/user-event': registry.npmmirror.com/@testing-library/user-event/13.5.0
@@ -2407,6 +2409,14 @@ packages:
     dependencies:
       '@nodelib/fs.scandir': registry.npmmirror.com/@nodelib/fs.scandir/2.1.5
       fastq: registry.npmmirror.com/fastq/1.13.0
+    dev: false
+
+  registry.npmmirror.com/@pdf-lib/fontkit/1.1.1:
+    resolution: {integrity: sha512-KjMd7grNapIWS/Dm0gvfHEilSyAmeLvrEGVcqLGi0VYebuqqzTbgF29efCx7tvx+IEbG3zQciRSWl3GkUSvjZg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@pdf-lib/fontkit/-/fontkit-1.1.1.tgz}
+    name: '@pdf-lib/fontkit'
+    version: 1.1.1
+    dependencies:
+      pako: registry.npmmirror.com/pako/1.0.11
     dev: false
 
   registry.npmmirror.com/@pdf-lib/standard-fonts/1.0.0:
