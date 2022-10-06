@@ -16,7 +16,13 @@ import moment from 'moment';
 
 type Props = {}
 
-async function printAll(pdfFiles: PDFFile[], orderId: string, pickupCode: string, printOrderInfo: boolean = false, type: 'print' | 'export') {
+async function printAll(
+  pdfFiles: PDFFile[],
+  orderId: string,
+  pickupCode: string,
+  printOrderInfo: boolean = false,
+  type: 'print' | 'export'
+) {
   const countFile = pdfFiles.length;
   let countPages = 0;
   pdfFiles.forEach(item => countPages += item.getPageCount());
@@ -136,16 +142,18 @@ const CreatePrintOrder = (props: Props) => {
           <span className="pickup-code">取货号码：{pickupCode}</span>
           <label className="price-inp-wrap">
             单价：
-            <Input className="price-inp" type="number" value={price} placeholder="请输入每页单价" onChange={(e) => {
-              let newPrice = parseFloat(e.target.value);
-              if (Number.isNaN(newPrice)) {
-                newPrice = 0;
-              }
-              if (newPrice < 0) {
-                newPrice = 0;
-              }
-              setPrice(newPrice);
-            }} />元/页
+            <Input
+              className="price-inp"
+              type="number"
+              value={price}
+              placeholder="请输入每页单价"
+              min={0}
+              max={999}
+              step={0.5}
+              onChange={(e) => {
+                const newPrice = parseFloat(e.target.value);
+                setPrice(newPrice);
+              }} />元/页
           </label>
           <span className="enabled-order-info-switch-wrap">
             打印订单信息：
