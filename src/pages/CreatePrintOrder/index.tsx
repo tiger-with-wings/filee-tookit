@@ -9,6 +9,8 @@ import { downloadFromUrl } from '../../utils/fileUtils';
 import { createOrderId, createPickupCode } from '../../utils/orderUtils';
 import Input from '../../components/Input';
 import fontkit from "@pdf-lib/fontkit";
+import simsunUrl from '../../assets/font/HanYiQiHei-40Jian-Regular-2.ttf';
+
 type Props = {}
 
 async function printAll(pdfFiles: PDFFile[], orderId: string, pickupCode: string, type: 'print' | 'export') {
@@ -21,10 +23,11 @@ async function printAll(pdfFiles: PDFFile[], orderId: string, pickupCode: string
   const firstPage = mergedPdf.addPage();
   const { height } = firstPage.getSize();
 
-  const simsunFontBuffer = await fetch('/fonts/simsun.ttf').then(res => {
-    console.log(res);
+  const simsunFontBuffer = await fetch(simsunUrl).then(res => {
+    console.log(res.blob())
     return res.arrayBuffer();
   });
+
   console.log(simsunFontBuffer);
   mergedPdf.registerFontkit(fontkit);
   const simsunFont = await mergedPdf.embedFont(simsunFontBuffer);
