@@ -2,7 +2,7 @@ import moment from 'moment';
 import { getRandomIntager } from './numberUtils';
 
 export function createOrderId() {
-  return moment().format('YYYYMMDDhhmmss') + getRandomIntager(6);
+  return moment().format('YYYYMMDD') + getRandomIntager(6);
 }
 
 export function createPickupCode() {

@@ -12,6 +12,7 @@ import fontkit from "@pdf-lib/fontkit";
 import simsunUrl from '../../assets/font/HanYiQiHei-40Jian-Regular-2.ttf';
 import Switch from '../../components/Switch';
 import assistantUrl from '../../assets/images/assistant.jpg';
+import moment from 'moment';
 
 type Props = {}
 
@@ -19,23 +20,38 @@ async function printAll(pdfFiles: PDFFile[], orderId: string, pickupCode: string
   const countFile = pdfFiles.length;
   let countPages = 0;
   pdfFiles.forEach(item => countPages += item.getPageCount());
-  const printInfo = `飞鲤便捷打印\n\n取货号码：${pickupCode}\n文件数量：${countFile}个\n合计页数：${countPages}页\n订单编号：${orderId}`;
+  const printInfo = `取货号码：${pickupCode}\n文件数量：${countFile}个\n合计页数：${countPages}页\n打印时间：${moment().format('YYYY-MM-DD HH:mm:ss')}\n订单编号：${orderId}`;
   console.log(printInfo);
   const mergedPdf = await PDFDocument.create();
 
   if (printOrderInfo) {
     try {
       const firstPage = mergedPdf.addPage();
-      const { height } = firstPage.getSize();
+      const { width, height } = firstPage.getSize();
 
       const simsunFontBytes = await fetch(simsunUrl).then(res => res.arrayBuffer());
       mergedPdf.registerFontkit(fontkit);
       const simsunFont = await mergedPdf.embedFont(simsunFontBytes);
 
+      firstPage.drawText('飞鲤便捷打印', {
+        x: 20,
+        y: height - 70,
+        size: 32,
+        font: simsunFont,
+      });
+
       firstPage.drawText(printInfo, {
         x: 20,
-        y: height - 50,
-        size: 22,
+        y: height - 120,
+        size: 20,
+        font: simsunFont,
+        lineHeight: 32,
+      });
+
+      firstPage.drawText('联系小助理', {
+        x: width - 124,
+        y: height - 246,
+        size: 16,
         font: simsunFont,
       });
 
@@ -43,10 +59,10 @@ async function printAll(pdfFiles: PDFFile[], orderId: string, pickupCode: string
       const jpgImage = await mergedPdf.embedJpg(jpgImageBytes);
 
       firstPage.drawImage(jpgImage, {
-        x: 22,
-        y: height - 360,
-        width: 160,
-        height: 160,
+        x: width - 144,
+        y: height - 225,
+        width: 120,
+        height: 120,
       });
     } catch (err) {
       console.error('添加自定义页失败');
