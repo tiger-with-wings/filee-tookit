@@ -49,6 +49,7 @@ const ChooseImg = ({ placeholder, style, autoSize }: Props) => {
               return;
             }
             inpRef.current.value = '';
+            setImgSize({});
             setDivSize({});
           }
         }
