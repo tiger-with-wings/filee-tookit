@@ -102,7 +102,7 @@ const CreatePrintOrder = (props: Props) => {
   const [orderId, setOrderId] = useState('');
   const [pickupCode, setPickupCode] = useState('');
   const [price, setPrice] = useState(1.00);
-  const [printOrderInfo, setPrintOrderInfo] = useState(false);
+  const [printOrderInfo, setPrintOrderInfo] = useState(true);
 
   useEffect(() => {
     setOrderId(createOrderId());
