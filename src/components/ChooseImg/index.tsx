@@ -6,16 +6,19 @@ import './index.scss';
 type Props = {
   placeholder?: string;
   style?: React.CSSProperties;
-  autoWidth?: boolean;
-  autoHeight?: boolean;
+  autoSize?: boolean;
 }
 
 const enableFileList = ['image/jpg', 'image/jpeg', 'image/png'];
 
-const ChooseImg = ({ placeholder, style, autoWidth, autoHeight }: Props) => {
+const ChooseImg = ({ placeholder, style, autoSize }: Props) => {
   const [src, setSrc] = useState('');
+  const [divSize, setDivSize] = useState<{ width?: string | number; height?: string | number }>({});
+  const [imgSize, setImgSize] = useState<{ width?: string | number; height?: string | number }>({});
 
   const inpRef = useRef<HTMLInputElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
+  const divRef = useRef<HTMLDivElement>(null);
 
   const setFileToSrc = useCallback((file: Blob) => {
     const fileReader = new FileReader();
@@ -31,7 +34,8 @@ const ChooseImg = ({ placeholder, style, autoWidth, autoHeight }: Props) => {
   return (
     <div
       className={`choose-img ${src === '' ? 'show-border' : ''}`}
-      style={style}
+      style={{ ...style, ...divSize }}
+      ref={divRef}
     >
       <i
         style={{
@@ -45,6 +49,7 @@ const ChooseImg = ({ placeholder, style, autoWidth, autoHeight }: Props) => {
               return;
             }
             inpRef.current.value = '';
+            setDivSize({});
           }
         }
       >&#xe67e;</i>
@@ -108,10 +113,43 @@ const ChooseImg = ({ placeholder, style, autoWidth, autoHeight }: Props) => {
       >
         <img
           hidden={src === ''}
-          className={`preview ${autoHeight ? 'auto-height' : ''} ${autoWidth ? 'auto-width' : ''}`}
+          style={{ ...imgSize }}
+          className="preview"
           src={src}
           title={`${placeholder}，点击重新选择`}
           alt="图片"
+          ref={imgRef}
+          onLoad={() => {
+            if (!divRef.current || !imgRef.current) {
+              return;
+            }
+            if (!autoSize) {
+              setDivSize({});
+              setImgSize({
+                width: '100%',
+                height: '100%',
+              });
+              return;
+            }
+            const ratioDiv = divRef.current.clientWidth / divRef.current.clientHeight;
+            const ratioImg = imgRef.current.clientWidth / imgRef.current.clientHeight;
+            let newWidth, newHeight;
+            if (ratioDiv < ratioImg) {
+              newWidth = divRef.current.clientWidth;
+              newHeight = newWidth / ratioImg
+            } else {
+              newHeight = divRef.current.clientHeight;
+              newWidth = newHeight * ratioImg;
+            }
+            setDivSize({
+              width: newWidth,
+              height: newHeight,
+            });
+            setImgSize({
+              width: newWidth,
+              height: newHeight,
+            });
+          }}
         />
         <div
           className="placeholder"

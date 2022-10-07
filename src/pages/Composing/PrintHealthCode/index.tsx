@@ -11,40 +11,37 @@ const PrintHealthCode = (props: Props) => {
       <div className="print-paper-a4 horizontal print-common-horizontal print-wrap">
         <ChooseImg
           style={{
-            maxWidth: '80mm',
-            minWidth: '60mm',
+            width: '80mm',
             height: '160mm',
             marginTop: '10mm',
           }}
           placeholder="选择第一张"
-          autoWidth
+          autoSize
         />
         {
           (type === '2' || type === '3') &&
           <ChooseImg
             style={{
-              maxWidth: '80mm',
-              minWidth: '60mm',
+              width: '80mm',
               height: '160mm',
               marginTop: '10mm',
               marginLeft: '10mm',
             }}
             placeholder="选择第二张"
-            autoWidth
+            autoSize
           />
         }
         {
           (type === '3') &&
           <ChooseImg
             style={{
-              maxWidth: '80mm',
-              minWidth: '60mm',
+              width: '80mm',
               height: '160mm',
               marginTop: '10mm',
               marginLeft: '10mm',
             }}
             placeholder="选择第三张"
-            autoWidth
+            autoSize
           />
         }
       </div>

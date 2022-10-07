@@ -135,7 +135,7 @@ const Composing = () => {
         }
       >
         <Button
-          hidden={location.pathname !== '/'}
+          hidden={location.pathname === '/composing'}
           styleType="success"
           onClick={
             () => {
@@ -144,7 +144,7 @@ const Composing = () => {
           }
         >导出PDF</Button>
         <Button
-          hidden={location.pathname !== '/'}
+          hidden={location.pathname === '/composing'}
           styleType="success"
           onClick={
             () => {
