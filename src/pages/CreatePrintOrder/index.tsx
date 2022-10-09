@@ -88,7 +88,7 @@ async function printAll(
   const blob = new Blob([mergedPdfFile], { type: 'application/pdf' });
   const url = window.URL.createObjectURL(blob);
   if (type === 'export') {
-    downloadFromUrl(url, '合并后的文件.pdf');
+    downloadFromUrl(url, pickupCode + '.pdf');
     return;
   }
   const win = window.open(url);
